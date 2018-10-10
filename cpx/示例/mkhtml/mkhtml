@@ -1,0 +1,260 @@
+nextInt
+top n
+pop
+push var n
+push int_val 1
++
+push var n
+push int_val 1
++
+*
+array
+top mem
+pop
+push var n
+push int_val 1
++
+array
+top f
+pop
+{
+push int_val 0
+top i
+pop
+label 4
+push var i
+push var n
+<=
+ifgoto 5
+goto 6
+label 5
+{
+push var mem
+push var i
+push var n
+push int_val 1
++
+*
++
+push var i
+push var f
++
+top_ptr
+pop
+push int_val 1
+push int_val 0
+push var i
+push var f
++
+[]
++
+top_ptr
+pop
+{
+push int_val 1
+top j
+pop
+label 1
+push var j
+push var n
+<=
+ifgoto 2
+goto 3
+label 2
+{
+push int_val 0
+push var j
+push var i
+push var f
++
+[]
++
+top_ptr
+pop
+}
+push var j
+push int_val 1
++
+top j
+pop
+goto 1
+label 3
+}
+}
+push var i
+push int_val 1
++
+top i
+pop
+goto 4
+label 6
+}
+{
+push int_val 1
+top i
+pop
+label 10
+push var i
+push var n
+<=
+ifgoto 11
+goto 12
+label 11
+{
+{
+push int_val 1
+top j
+pop
+label 7
+push var j
+push var i
+<=
+ifgoto 8
+goto 9
+label 8
+{
+push var j
+push int_val 1
+-
+push var i
+push int_val 1
+-
+push var f
++
+[]
++
+[]
+push var j
+push var i
+push int_val 1
+-
+push var f
++
+[]
++
+[]
++
+push var j
+push var i
+push var f
++
+[]
++
+top_ptr
+pop
+}
+push var j
+push int_val 1
++
+top j
+pop
+goto 7
+label 9
+}
+}
+push var i
+push int_val 1
++
+top i
+pop
+goto 10
+label 12
+}
+push string_val "\n<!doctype html>\n<html>\n\t<head>\n\t\t<meta charset='utf-8'>\n\t\t<title>yyhhenry</title>\n\t\t<style>\n\t\t\tbody{\n\t\t\t\tfont-family: Monaco,Menlo,Consolas,'Courier New',FontAwesome,monospace;\n\t\t\t}\n\t\t</style>\n\t</head>\n\t<body>\n"
+print
+pop
+{
+push int_val 0
+top i
+pop
+label 18
+push var i
+push var n
+<=
+ifgoto 19
+goto 20
+label 19
+{
+{
+push int_val 0
+top j
+pop
+label 15
+push var j
+push var i
+<=
+ifgoto 16
+goto 17
+label 16
+{
+{
+push var j
+push var i
+push var f
++
+[]
++
+[]
+push int_val 2
+%
+push int_val 0
+==
+ifgoto 13
+{
+push string_val "\n\t\t\t\n\t\t"
+push var j
+push var i
+push var f
++
+[]
++
+[]
++
+push string_val "&nbsp;\n\t\t\t\t\n\t\t\t"
++
+print
+pop
+}
+goto 14
+label 13
+{
+push string_val "\n\t\t\t\n\t\t<strong>"
+push var j
+push var i
+push var f
++
+[]
++
+[]
++
+push string_val "</strong>&nbsp;\n\t\t\t\t\n\t\t\t"
++
+print
+pop
+}
+label 14
+}
+}
+push var j
+push int_val 1
++
+top j
+pop
+goto 15
+label 17
+}
+push string_val "\n\t\n\t\t<br>\n\t\n\t"
+print
+pop
+}
+push var i
+push int_val 1
++
+top i
+pop
+goto 18
+label 20
+}
+push string_val "\n\t</body>\n</html>\n"
+print
+pop

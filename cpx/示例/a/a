@@ -1,0 +1,110 @@
+push int_val 5
+array
+top a
+pop
+push int_val 0
+push int_val 0
+push var a
++
+top_ptr
+pop
+push bool_val 0
+push int_val 1
+push var a
++
+top_ptr
+pop
+push double_val 0.0
+push int_val 2
+push var a
++
+top_ptr
+pop
+push string_val "_"
+push int_val 3
+push var a
++
+top_ptr
+pop
+push int_val 1
+array
+push int_val 4
+push var a
++
+top_ptr
+pop
+push int_val 1
+array
+push int_val 0
+push int_val 4
+push var a
++
+[]
++
+top_ptr
+pop
+push int_val 233
+push int_val 0
+push int_val 0
+push int_val 4
+push var a
++
+[]
++
+[]
++
+top_ptr
+pop
+push int_val 0
+push var a
++
+[]
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 1
+push var a
++
+[]
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 2
+push var a
++
+[]
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 3
+push var a
++
+[]
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 0
+push int_val 0
+push int_val 4
+push var a
++
+[]
++
+[]
++
+[]
+print
+pop
+push string_val "\n\nPaused..."
+print
+pop
+nextChar
+pop

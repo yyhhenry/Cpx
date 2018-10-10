@@ -1,0 +1,3 @@
+请完整下载整个cpx文件夹，然后使用install.bat安装。
+
+可以参阅https://www.luogu.org/blog/yyhhenry/coding-cpx#

@@ -1,0 +1,58 @@
+
+n=nextInt;
+mem=array((n+1)*(n+1));
+f=array(n+1);
+for i=0 i<=n i=i+1 {
+	f[i]=mem+i*(n+1);
+	f[i][0]=1;
+	for j=1 j<=n j=j+1 {
+		f[i][j]=0;
+	}
+}
+for i=1 i<=n i=i+1 {
+	for j=1 j<=i j=j+1 {
+		f[i][j]=f[i-1][j-1]+f[i-1][j];
+	}
+}
+.("
+<!doctype html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>yyhhenry</title>
+		<style>
+			body{
+				font-family: Monaco,Menlo,Consolas,'Courier New',FontAwesome,monospace;
+			}
+		</style>
+	</head>
+	<body>
+");
+
+for i=0 i<=n i=i+1 {
+	for j=0 j<=i j=j+1 {
+		if(f[i][j]%2==0){
+			.("
+			
+		<strong>"+f[i][j]+"</strong>&nbsp;
+				
+			");
+		}else{
+			.("
+			
+		"+f[i][j]+"&nbsp;
+				
+			");
+		}
+	}
+	.("
+	
+		<br>
+	
+	");
+}
+
+.("
+	</body>
+</html>
+");

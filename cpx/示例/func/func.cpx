@@ -1,0 +1,23 @@
+def f1()
+return 0;
+def f2(x,y)return x*y;
+def f3(x,y){
+	z=y[0];
+	y[0]=x[0];
+	x[0]=z;
+}
+.f1();
+."\n";
+x=2;
+y=3;
+.f2(x,y);
+."\n";
+ak1=array 1;
+ak2=array(1);
+ak1[0]=10;
+ak2[0]=20;
+f3(ak1,ak2);
+.ak1[0];
+." ";
+.ak2[0];
+."\n";

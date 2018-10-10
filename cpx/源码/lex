@@ -1,0 +1,238 @@
+#pragma once
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <vector>
+#include <string>
+
+#define TYPE_INT 1
+#define TYPE_DOUBLE 2
+#define TYPE_BOOL 3
+#define TYPE_TRUE 4
+#define TYPE_FALSE 5
+#define TYPE_STRING 6
+#define TYPE_LABEL 7
+#define TYPE_NAME 8
+#define TYPE_EOF 9
+#define TYPE_COM 10  //...;
+#define TYPE_COMS 11 //...;...;...;
+#define TYPE_BLOCK 12 //{...;...;...;}
+#define TYPE_COMMA_LIS 13 //... , ...
+#define TYPE_EXP 14
+#define TYPE_SETMEM TYPE_EXP
+#define TYPE_INT_VAL TYPE_EXP
+#define TYPE_DOUBLE_VAL TYPE_EXP
+#define TYPE_BOOL_VAL TYPE_EXP
+#define TYPE_STRING_VAL TYPE_EXP
+#define TYPE_NEXTINT TYPE_EXP
+#define TYPE_NEXT TYPE_EXP
+#define TYPE_NEXTLINE TYPE_EXP
+#define TYPE_NEXTCHAR TYPE_EXP
+#define TYPE_NEXTDOUBLE TYPE_EXP
+#define TYPE_IF 18
+#define TYPE_FOR 19
+#define TYPE_WHILE 20
+#define TYPE_ELSE 21
+#define TYPE_RETURN 22
+#define TYPE_ARRS 23
+#define TYPE_ARRP 24
+#define TYPE_ARRAY 25
+#define TYPE_DEF 26
+#define TYPE_DEF_HEAD 27
+#define TYPE_CALL_HEAD 28
+#define TYPE_LENGTHOF 29
+struct listype{
+	int type;
+	std::string ans;
+};
+std::vector<listype>type_stack,cal_stack;
+#define MODE_NULL 0
+#define MODE_INT 1
+#define MODE_DOUBLE 2
+#define MODE_NAME 3
+#define MODE_STRING 4
+#define MODE_REM 5
+#define MODE_LABEL 6
+#define MODE_EOF -1
+int getmode=MODE_NULL;
+std::string getval="";
+bool string_bc=0;
+#define fresh() {nrd=1;continue;}
+bool islabel(char c){
+	return c=='('||c==')'||c=='<'||c=='>'||c=='='||c=='{'||c=='}'||c=='['||c==']'||c=='!'||c=='&'||
+		c=='|'||c=='+'||c=='-'||c=='*'||c=='/'||c=='%'||c==';'||c==','||c=='.';
+}
+void lex(){
+	char c;
+	bool nrd=0;
+	while(getmode!=MODE_EOF){
+		if(!nrd)c=getchar();
+		else nrd=0;
+		if(getmode==MODE_NULL){
+			if((c>='0'&&c<='9')){
+				getmode=MODE_INT;
+				fresh();
+			}
+			if(c=='\"'){
+				getmode=MODE_STRING;
+			}
+			if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c=='_')){
+				getmode=MODE_NAME;
+				fresh();
+			}
+			if(islabel(c)){
+				getmode=MODE_LABEL;
+				fresh();
+			}
+			if(c==EOF){
+				getmode=MODE_EOF;
+				fresh();
+			}
+		}else if(getmode==MODE_INT){
+			if(c=='.'){
+				getmode=MODE_DOUBLE;
+				getval.push_back(c);
+			}else if(c<'0'||c>'9'){
+				listype x;
+				x.type=TYPE_INT_VAL;
+				x.ans="push int_val "+getval;
+				type_stack.push_back(x);
+				getval="";
+				getmode=MODE_NULL;
+				fresh();
+			}else if(c>='0'&&c<='9'){
+				getval.push_back(c);
+			}
+		}else if(getmode==MODE_DOUBLE){
+			if(c>='0'&&c<='9'){
+				getval.push_back(c);
+			}else if(c<'0'||c>'9'){
+				listype x;
+				x.type=TYPE_DOUBLE_VAL;
+				x.ans="push double_val "+getval;
+				type_stack.push_back(x);
+				getval="";
+				getmode=MODE_NULL;
+				fresh();
+			}
+		}else if(getmode==MODE_NAME){
+			if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c=='_')||isdigit(c)){
+				getval.push_back(c);
+			}else{
+				listype x;
+				x.type=TYPE_NAME;
+				if(getval=="int"){
+					x.type=TYPE_INT;
+				}else if(getval=="double"){
+					x.type=TYPE_DOUBLE;
+				}else if(getval=="string"){
+					x.type=TYPE_STRING;
+				}else if(getval=="bool"){
+					x.type=TYPE_BOOL;
+				}else if(getval=="true"){
+					x.type=TYPE_TRUE;
+				}else if(getval=="false"){
+					x.type=TYPE_FALSE;
+				}else if(getval=="if"){
+					x.type=TYPE_IF;
+				}else if(getval=="for"){
+					x.type=TYPE_FOR;
+				}else if(getval=="while"){
+					x.type=TYPE_WHILE;
+				}else if(getval=="else"){
+					x.type=TYPE_ELSE;
+				}else if(getval=="return"){
+					x.type=TYPE_RETURN;
+				}else if(getval=="nextInt"){
+					x.type=TYPE_NEXTINT;
+				}else if(getval=="next"){
+					x.type=TYPE_NEXT;
+				}else if(getval=="nextLine"){
+					x.type=TYPE_NEXTLINE;
+				}else if(getval=="nextChar"){
+					x.type=TYPE_NEXTCHAR;
+				}else if(getval=="nextDouble"){
+					x.type=TYPE_NEXTDOUBLE;
+				}else if(getval=="array"){
+					x.type=TYPE_ARRAY;
+				}else if(getval=="def"){
+					x.type=TYPE_DEF;
+				}else if(getval=="lengthOf"){
+					x.type=TYPE_LENGTHOF;
+				}
+				x.ans=getval;
+				type_stack.push_back(x);
+				getval="";
+				getmode=MODE_NULL;
+				fresh();
+			}
+		}else if(getmode==MODE_STRING){
+			if(string_bc){
+				getval.push_back(c);
+				string_bc=0;
+			}else{
+				if(c=='\"'){
+					listype x;
+					x.type=TYPE_STRING_VAL;
+					x.ans="push string_val \""+getval+"\"";
+					type_stack.push_back(x);
+					getmode=MODE_NULL;
+					getval="";
+				}else if(c=='\r'){
+					
+				}else if(c=='\n'){
+					getval+="\\n";
+				}else if(c=='\t'){
+					getval+="\\t";
+				}else if(c=='\\'){
+					getval.push_back(c);
+					string_bc=1;
+				}else if(c==EOF){
+					fprintf(stderr,"\n\n骚年你忘了一个`\"`。\n\n");
+					getmode=MODE_EOF;
+				}else{
+					getval.push_back(c);
+				}
+			}
+		}else if(getmode==MODE_REM){
+			if(c=='\n'||c==EOF){
+				getmode=MODE_NULL;
+			}
+		}else if(getmode==MODE_LABEL){
+			if(getval=="."&&c>='0'&&c<='9'){
+				getmode=MODE_DOUBLE;
+				fresh();
+			}
+			if(!islabel(c)){
+				if(getval!=""){
+					listype x;
+					x.type=TYPE_LABEL;
+					x.ans=getval;
+					type_stack.push_back(x);
+					getval="";
+				}
+				getmode=MODE_NULL;
+				fresh();
+			}
+			if(getval==""){
+				getval.push_back(c);
+			}else if(getval=="/"&&c=='/'){
+				getmode=MODE_REM;
+				getval="";
+			}else if((getval=="<"||getval=="="||getval==">"||getval=="!")&&c=='='){
+				getval.push_back(c);
+			}else if(getval.length()==1&&getval[0]==c&&(c=='&'||c=='|')){
+				getval.push_back(c);
+			}else{
+				listype x;
+				x.type=TYPE_LABEL;
+				x.ans=getval;
+				type_stack.push_back(x);
+				getmode=MODE_NULL;
+				getval="";
+				fresh();
+			}
+		}
+	}
+}
+#undef fresh

@@ -1,0 +1,180 @@
+goto 5
+label 1
+top f
+pop
+top x
+pop
+{
+{
+push var x
+push var f
++
+[]
+push var x
+==
+ifgoto 2
+goto 3
+label 2
+push var x
+return
+label 3
+}
+push var x
+push var f
++
+[]
+push var f
+call 4 1
+label 4
+push var x
+push var f
++
+top_ptr
+return
+}
+push null
+return
+label 5
+goto 10
+label 6
+top f
+pop
+top n
+pop
+{
+push int_val 1
+top i
+pop
+label 7
+push var i
+push var n
+<=
+ifgoto 8
+goto 9
+label 8
+push var i
+push var i
+push var f
++
+top_ptr
+pop
+push var i
+push int_val 1
++
+top i
+pop
+goto 7
+label 9
+}
+push null
+return
+label 10
+goto 14
+label 11
+top f
+pop
+top x
+pop
+top y
+pop
+{
+push var x
+push var f
+call 12 1
+label 12
+top x
+pop
+push var y
+push var f
+call 13 1
+label 13
+top y
+pop
+push var y
+push var x
+push var f
++
+top_ptr
+pop
+}
+push null
+return
+label 14
+nextInt
+top n
+pop
+nextInt
+top m
+pop
+push var n
+push int_val 3
++
+array
+top f
+pop
+push var n
+push var f
+call 15 6
+label 15
+pop
+{
+push int_val 1
+top i
+pop
+label 21
+push var i
+push var m
+<=
+ifgoto 22
+goto 23
+label 22
+{
+nextInt
+top x
+pop
+nextInt
+top y
+pop
+nextInt
+top z
+pop
+{
+push var x
+push int_val 1
+==
+ifgoto 19
+{
+push var y
+push var f
+call 17 1
+label 17
+push var z
+push var f
+call 18 1
+label 18
+==
+print
+pop
+push string_val "\n"
+print
+pop
+}
+goto 20
+label 19
+push var z
+push var y
+push var f
+call 16 11
+label 16
+pop
+label 20
+}
+}
+push var i
+push int_val 1
++
+top i
+pop
+goto 21
+label 23
+}

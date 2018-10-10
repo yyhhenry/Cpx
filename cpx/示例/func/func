@@ -1,0 +1,118 @@
+goto 1
+label 2
+push int_val 0
+return
+push null
+return
+label 1
+goto 4
+label 3
+top x
+pop
+top y
+pop
+push var x
+push var y
+*
+return
+push null
+return
+label 4
+goto 6
+label 5
+top x
+pop
+top y
+pop
+{
+push int_val 0
+push var y
++
+[]
+top z
+pop
+push int_val 0
+push var x
++
+[]
+push int_val 0
+push var y
++
+top_ptr
+pop
+push var z
+push int_val 0
+push var x
++
+top_ptr
+pop
+}
+push null
+return
+label 6
+
+call 7 2
+label 7
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 2
+top x
+pop
+push int_val 3
+top y
+pop
+push var y
+push var x
+call 8 3
+label 8
+print
+pop
+push string_val "\n"
+print
+pop
+push int_val 1
+array
+top ak1
+pop
+push int_val 1
+array
+top ak2
+pop
+push int_val 10
+push int_val 0
+push var ak1
++
+top_ptr
+pop
+push int_val 20
+push int_val 0
+push var ak2
++
+top_ptr
+pop
+push var ak2
+push var ak1
+call 9 5
+label 9
+pop
+push int_val 0
+push var ak1
++
+[]
+print
+pop
+push string_val " "
+print
+pop
+push int_val 0
+push var ak2
++
+[]
+print
+pop
+push string_val "\n"
+print
+pop

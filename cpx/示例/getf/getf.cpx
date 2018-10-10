@@ -1,0 +1,25 @@
+def getf(f,x){
+	if f[x]==x return x;
+	return f[x]=getf(f,f[x]);
+}
+def init(f,n)for i=1 i<=n i=i+1 f[i]=i;
+def add(f,x,y){
+	x=getf(f,x);
+	y=getf(f,y);
+	f[x]=y;
+}
+
+n=nextInt;
+m=nextInt;
+f=array(n+3);
+init(f,n);
+for i=1 i<=m i=i+1{
+	x=nextInt;
+	y=nextInt;
+	z=nextInt;
+	if x==1 add(f,y,z);
+	else{
+		.(getf(f,y)==getf(f,z));
+		."\n";
+	}
+}
